@@ -27,7 +27,7 @@ public class Config {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root");
-		dataSource.setUrl("jdbc:mysql://localhost/cs544?useSSL=false");
+		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/cs544?useSSL=false"); // use for docker container
 		return dataSource;
 	}
 
@@ -41,7 +41,7 @@ public class Config {
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		properties.setProperty("hibernate.id.new_generator_mappings", "false");
 		properties.setProperty("hibernate.show_sql", "true");
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(vendorAdapter);
