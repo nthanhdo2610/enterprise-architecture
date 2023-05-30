@@ -1,5 +1,10 @@
 package cs544;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+@Service
+@Qualifier("suppliers")
 public class Amazon implements IBookSupplier {
 
 	public double computePrice(String isbn) {

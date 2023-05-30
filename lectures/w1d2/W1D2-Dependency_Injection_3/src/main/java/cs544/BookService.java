@@ -1,18 +1,22 @@
 package cs544;
 
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 
+@Service
 public class BookService implements IBookService {
-	public List<IBookSupplier> suppliers = new ArrayList<IBookSupplier>();
+	private final List<IBookSupplier> suppliers; // @Qualifier("suppliers")
 
-	public BookService() {
-		IBookSupplier amazon = new Amazon();
-		IBookSupplier barnesandnoble = new BarnesAndNoble();
-		IBookSupplier ebooks = new EBooks();
-
-		suppliers.add(amazon);
-		suppliers.add(barnesandnoble);
-		suppliers.add(ebooks);
+	public BookService(List<IBookSupplier> suppliers) {
+//		IBookSupplier amazon = new Amazon();
+//		IBookSupplier barnesandnoble = new BarnesAndNoble();
+//		IBookSupplier ebooks = new EBooks();
+//
+//		suppliers.add(amazon);
+//		suppliers.add(barnesandnoble);
+//		suppliers.add(ebooks);
+		this.suppliers = suppliers;
 	}
 
 	public void buy(Book book) {
