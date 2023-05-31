@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cs544</groupId>
-    <artifactId>Bank_Application</artifactId>
+    <artifactId>Bank_Application_AOP</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
