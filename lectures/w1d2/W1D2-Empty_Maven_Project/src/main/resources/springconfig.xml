@@ -10,7 +10,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <constructor-arg value="Hello"/>
         <property name="classB" ref="classB" />
     </bean>
-    <bean id="classB" class="cs544.ClassB" init-method="init" destroy-method="destroy"  lazy-init="true">
+    <bean id="classB" class="cs544.ClassB" init-method="init" destroy-method="destroy" lazy-init="true">
         <property name="text" value="World" />
     </bean>
     <bean id="classC" class="cs544.ClassC"/>
