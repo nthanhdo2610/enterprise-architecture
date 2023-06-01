@@ -9,8 +9,10 @@ import jakarta.persistence.TypedQuery;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AppBook {
+    private static final Logger logger = Logger.getLogger(AppBook.class.getSimpleName());
 
     private static final String FETCH_ALL_BOOK_SQL = "FROM Book";
     private static EntityManagerFactory emf;
@@ -21,6 +23,7 @@ public class AppBook {
         EntityManager em = emf.createEntityManager();
 
         // Insert data
+        logger.info("=====Insert data");
         em.getTransaction().begin();
         em.persist(new Book(
                 "Cracking the Coding Interview: 189 Programming Questions and Solutions",
@@ -36,15 +39,17 @@ public class AppBook {
         em.close();
 
         // Select data
+        logger.info("=====Select data");
         em = emf.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Book> query = em.createQuery(FETCH_ALL_BOOK_SQL, Book.class);
         List<Book> ls = query.getResultList();
-        ls.forEach(Book::toString);
+        ls.forEach(b->logger.info(b.toString()));
         em.getTransaction().commit();
         em.close();
 
         // Update data
+        logger.info("=====Update data");
         em = emf.createEntityManager();
         em.getTransaction().begin();
         query = em.createQuery(FETCH_ALL_BOOK_SQL, Book.class);
@@ -63,11 +68,12 @@ public class AppBook {
         em.close();
 
         // Select data
+        logger.info("=====Select data");
         em = emf.createEntityManager();
         em.getTransaction().begin();
         query = em.createQuery(FETCH_ALL_BOOK_SQL, Book.class);
         ls = query.getResultList();
-        ls.forEach(Book::toString);
+        ls.forEach(b->logger.info(b.toString()));
         em.getTransaction().commit();
         em.close();
     }

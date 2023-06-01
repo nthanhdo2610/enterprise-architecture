@@ -1,12 +1,11 @@
 package cs544.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -14,9 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Book {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String ISBN;
     private String title;
     private String author;
@@ -29,16 +28,5 @@ public class Book {
         this.author = author;
         this.price = price;
         this.publish_date = publish_date;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", ISBN='" + ISBN + '\'' +
-                ", author='" + author + '\'' +
-                ", price=" + price +
-                ", publish_date=" + publish_date +
-                '}';
     }
 }
