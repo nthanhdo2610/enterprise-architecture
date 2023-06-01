@@ -35,7 +35,7 @@ public class AccountService implements IAccountService {
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
-		logger.log("createAccount with parameters accountNumber= "+accountNumber+" , customerName= "+customerName);
+//		logger.log("createAccount with parameters accountNumber= "+accountNumber+" , customerName= "+customerName);
 		return account;
 	}
 
@@ -43,7 +43,7 @@ public class AccountService implements IAccountService {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.deposit(amount);
 		accountDAO.updateAccount(account);
-		logger.log("deposit with parameters accountNumber= "+accountNumber+" , amount= "+amount);
+//		logger.log("deposit with parameters accountNumber= "+accountNumber+" , amount= "+amount);
 		if (amount > 10000){
 			jmsSender.sendJMSMessage("Deposit of $ "+amount+" to account with accountNumber= "+accountNumber);
 		}
@@ -62,7 +62,7 @@ public class AccountService implements IAccountService {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.withdraw(amount);
 		accountDAO.updateAccount(account);
-		logger.log("withdraw with parameters accountNumber= "+accountNumber+" , amount= "+amount);
+//		logger.log("withdraw with parameters accountNumber= "+accountNumber+" , amount= "+amount);
 	}
 
 	public void depositEuros(long accountNumber, double amount) {
@@ -70,7 +70,7 @@ public class AccountService implements IAccountService {
 		double amountDollars = currencyConverter.euroToDollars(amount);
 		account.deposit(amountDollars);
 		accountDAO.updateAccount(account);
-		logger.log("depositEuros with parameters accountNumber= "+accountNumber+" , amount= "+amount);
+//		logger.log("depositEuros with parameters accountNumber= "+accountNumber+" , amount= "+amount);
 		if (amountDollars > 10000){
 			jmsSender.sendJMSMessage("Deposit of $ "+amount+" to account with accountNumber= "+accountNumber);
 		}
@@ -81,7 +81,7 @@ public class AccountService implements IAccountService {
 		double amountDollars = currencyConverter.euroToDollars(amount);
 		account.withdraw(amountDollars);
 		accountDAO.updateAccount(account);
-		logger.log("withdrawEuros with parameters accountNumber= "+accountNumber+" , amount= "+amount);
+//		logger.log("withdrawEuros with parameters accountNumber= "+accountNumber+" , amount= "+amount);
 	}
 
 	public void transferFunds(long fromAccountNumber, long toAccountNumber, double amount, String description) {
@@ -90,7 +90,7 @@ public class AccountService implements IAccountService {
 		fromAccount.transferFunds(toAccount, amount, description);
 		accountDAO.updateAccount(fromAccount);
 		accountDAO.updateAccount(toAccount);
-		logger.log("transferFunds with parameters fromAccountNumber= "+fromAccountNumber+" , toAccountNumber= "+toAccountNumber+" , amount= "+amount+" , description= "+description);
+//		logger.log("transferFunds with parameters fromAccountNumber= "+fromAccountNumber+" , toAccountNumber= "+toAccountNumber+" , amount= "+amount+" , description= "+description);
 		if (amount > 10000){
 			jmsSender.sendJMSMessage("TransferFunds of $ "+amount+" from account with accountNumber= "+fromAccount+" to account with accountNumber= "+toAccount);
 		}
