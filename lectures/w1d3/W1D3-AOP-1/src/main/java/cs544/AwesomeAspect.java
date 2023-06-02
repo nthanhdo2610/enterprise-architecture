@@ -24,7 +24,7 @@ public class AwesomeAspect {
         System.out.println("AwesomeAspect start method - text: " + text);
     }
 
-    @Around("execution(* cs544.*.*(..))")
+    @Around("execution(* cs544.*.get*(..))")
     public Object beforeTrace(ProceedingJoinPoint jp) throws Throwable {
         String name = jp.getTarget().getClass().getSimpleName();
         if (name.equals("BClass")) {
