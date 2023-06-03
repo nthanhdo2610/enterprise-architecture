@@ -25,7 +25,24 @@ public class AppCar {
         Car car2 = new Car("Mercedes", "HOO100", 4088.00);
         // save the car
         em.persist(car2);
-
+        // Print “Em contains Car1 before clear” if it contains car1 after car2 has been persisted
+        if(em.contains(car1)){
+            System.out.println("Em contains Car1 before clear");
+        }
+        // Clear the entity manager cache
+        em.clear();
+        // Print “Em contains Car1 after clear” if it contains car1 after the clear
+        if(em.contains(car1)){
+            System.out.println("Em contains Car1 before clear");
+        }
+        // Change the price of car1 to 50000
+        car1.setPrice(50000.00);
+        // Merge car1 (but do not store the return value of merge)
+        em.merge(car1);
+        // Update the code to store the return value of merge into the Car1 variable
+        car1 = em.merge(car1);
+        // Change the year of car1 to 2022
+        car1.setYear("2022");
         em.getTransaction().commit();
         em.close();
 
