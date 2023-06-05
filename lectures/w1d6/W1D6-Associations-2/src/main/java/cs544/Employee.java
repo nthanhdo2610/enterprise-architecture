@@ -1,6 +1,7 @@
 package cs544;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +24,10 @@ public class Employee {
     private long employee_number;
     private String name;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(nullable = false)
     private Department department;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(nullable = false)
     private Office office;
 
     Employee(String name, Department department, Office office) {

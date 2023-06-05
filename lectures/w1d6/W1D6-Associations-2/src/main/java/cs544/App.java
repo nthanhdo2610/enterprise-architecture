@@ -6,12 +6,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class App {
 
@@ -19,7 +15,29 @@ public class App {
     private static final Faker faker = new Faker(Locale.US);
 
     public static void main(String[] args) {
-        associationDepartment();
+//        associationDepartment();
+        associationCustomer();
+    }
+
+    static void associationCustomer() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Customer customer = new Customer(faker.name().fullName());
+        customer.addReservation(new Reservation(new Book(faker.code().isbn13(), faker.book().title(), faker.book().author(), new Publisher(faker.company().name())), faker.date().future(30, TimeUnit.DAYS)));
+        customer.addReservation(new Reservation(new Book(faker.code().isbn13(), faker.book().title(), faker.book().author(), new Publisher(faker.company().name())), faker.date().future(30, TimeUnit.DAYS)));
+        customer.addReservation(new Reservation(new Book(faker.code().isbn13(), faker.book().title(), faker.book().author(), new Publisher(faker.company().name())), faker.date().future(30, TimeUnit.DAYS)));
+        em.persist(customer);
+        em.getTransaction().commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        TypedQuery<Customer> query = em.createQuery("from Customer", Customer.class);
+        query.getResultList().forEach(System.out::println);
+        em.getTransaction().commit();
+        em.close();
     }
 
     static void associationDepartment() {
