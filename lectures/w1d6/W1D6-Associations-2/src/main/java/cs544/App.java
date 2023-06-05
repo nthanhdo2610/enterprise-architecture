@@ -15,8 +15,9 @@ public class App {
     private static final Faker faker = new Faker(Locale.US);
 
     public static void main(String[] args) {
-//        associationDepartment();
+        associationDepartment();
         associationCustomer();
+        associationStudent();
     }
 
     static void associationCustomer() {
@@ -57,6 +58,29 @@ public class App {
         em.getTransaction().begin();
 
         TypedQuery<Employee> query = em.createQuery("from Employee", Employee.class);
+        query.getResultList().forEach(System.out::println);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    static void associationStudent() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Course course = new Course(faker.educator().course(), faker.code().isbn10());
+        Student student1 = new Student(faker.code().ean8(), faker.name().firstName(), faker.name().lastName());
+        student1.regisCourse(course);
+        Student student2 = new Student(faker.code().ean8(), faker.name().firstName(), faker.name().lastName());
+        student2.regisCourse(course);
+
+        em.persist(course);
+        em.getTransaction().commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        TypedQuery<Student> query = em.createQuery("from Student", Student.class);
         query.getResultList().forEach(System.out::println);
         em.getTransaction().commit();
         em.close();
