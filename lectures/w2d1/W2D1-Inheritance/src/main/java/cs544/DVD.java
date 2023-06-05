@@ -11,11 +11,11 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Book extends Product {
-    private String title;
+public class DVD extends Product {
+    private String genre;
 
-    public Book(String name, String description, String title) {
+    public DVD(String name, String description, String genre) {
         super(name, description);
-        this.title = title;
+        this.genre = genre;
     }
 }

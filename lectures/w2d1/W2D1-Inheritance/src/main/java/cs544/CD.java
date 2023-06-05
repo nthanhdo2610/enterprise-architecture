@@ -1,5 +1,6 @@
 package cs544;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,11 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Book extends Product {
-    private String title;
+public class CD extends Product {
+    private String artist;
 
-    public Book(String name, String description, String title) {
+    public CD(String name, String description, String artist) {
         super(name, description);
-        this.title = title;
+        this.artist = artist;
     }
 }

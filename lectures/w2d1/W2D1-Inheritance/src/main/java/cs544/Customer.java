@@ -13,7 +13,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Getter
@@ -23,18 +25,27 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable = false)
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
+    private String firstname;
+    @Column(nullable = false)
+    private String lastname;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Order> orders;
 
-    public Customer(String name) {
-        this.name = name;
-        this.reservations = new ArrayList<>();
+    public Customer(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.orders = new ArrayList<>();
     }
 
-    void addReservation(Reservation reservation) {
-        this.reservations.add(reservation);
+    public Order addOrder(List<OrderLine> orderLines) {
+        Order order = new Order(new Date(), this, orderLines);
+        if (this.orders == null) {
+            orders = new ArrayList<>();
+        }
+        this.orders.add(order);
+        return order;
     }
 }

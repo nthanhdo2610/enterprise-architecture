@@ -8,33 +8,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class Reservation {
+@Table(name = "Invoice")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "order_id")
+    private Long id;
     @Column(nullable = false)
     private Date date;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
-    private Book book;
+    private Customer customer;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", nullable = false)
+    private List<OrderLine> orderLines;
 
-    public Reservation(Book book, Date date) {
-        if (book == null) {
-            throw new RuntimeException("Invalid Reservation!");
+    public Order(Date date, Customer customer, List<OrderLine> orderLines) {
+        if (customer == null) {
+            throw new RuntimeException("Invalid Order!");
         }
         this.date = date;
-        this.book = book;
+        this.customer = customer;
+        this.orderLines = orderLines;
     }
 }
