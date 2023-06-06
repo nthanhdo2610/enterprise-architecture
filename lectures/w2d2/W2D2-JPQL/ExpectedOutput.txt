@@ -1,0 +1,24 @@
+Question A:
+Flight:  Departs:                       Arrives:                       
+NW 36    Detroit       8/6/09  7:10 PM  Amsterdam     8/7/09  9:00 AM
+QF 12    Los Angeles   8/5/09 10:30 PM  Sydney        8/7/09  6:15 AM
+UA 944   Chicago       8/6/09  2:30 PM  Frankfurt     8/7/09  5:45 AM
+
+Question B:
+Airlines that use A380s:
+SkyTeam
+oneworld
+Star Alliance
+
+Question C:
+Flight:  Departs:                       Arrives:                       
+NW 96    Tokyo         8/6/09  3:05 PM  Detroit       8/7/09  1:45 PM
+NW 1689  Detroit       8/7/09 12:05 PM  Chicago       8/7/09 12:21 PM
+QF 21    Sydney        8/6/09  9:55 PM  Tokyo         8/7/09  6:55 AM
+QF 4022  Tokyo         8/7/09 11:05 AM  Singapore     8/7/09  5:15 PM
+
+Question D:
+Flight:  Departs:                       Arrives:                       
+NW 8445  Amsterdam     8/7/09  7:15 AM  London        8/7/09  7:40 AM
+QF 4022  Tokyo         8/7/09 11:05 AM  Singapore     8/7/09  5:15 PM
+UA 4842  London        8/7/09  8:10 AM  Amsterdam     8/7/09 10:38 AM
