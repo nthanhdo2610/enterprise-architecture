@@ -19,6 +19,15 @@ public class EntityManagerInterceptor implements Filter {
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
+        EntityManager em = EntityManagerHelper.getCurrent();
+        em.getTransaction().begin();
+        Student student = new Student(12345, "Frank", "Brown");
+        Course course1 = new Course(1101, "Java", "A");
+        Course course2 = new Course(1102, "Math", "B+");
+        student.addCourse(course1);
+        student.addCourse(course2);
+        em.persist(student);
+        em.getTransaction().commit();
     }
 
     @Override

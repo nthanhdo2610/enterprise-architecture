@@ -9,13 +9,6 @@ import java.util.Map;
 public class StudentDAO {
 
     public StudentDAO() {
-        EntityManager em = EntityManagerHelper.getCurrent();
-        Student student = new Student(12345, "Frank", "Brown");
-        Course course1 = new Course(1101, "Java", "A");
-        Course course2 = new Course(1102, "Math", "B+");
-        student.addCourse(course1);
-        student.addCourse(course2);
-        em.persist(student);
     }
 
     public Student load(long studentid) {
