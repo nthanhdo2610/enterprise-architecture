@@ -3,28 +3,31 @@ package cs544.bank.dao;
 import java.util.*;
 
 import cs544.bank.domain.Account;
+import cs544.bank.helper.EntityManagerHelper;
+import jakarta.persistence.EntityManager;
 
-public class AccountDAO implements IAccountDAO {
-	Collection<Account> accountlist = new ArrayList<Account>();
+public class JPAAccountDAO implements IAccountDAO {
 
 	public void saveAccount(Account account) {
+		EntityManager em = EntityManagerHelper.getCurrent();
 		// System.out.println("AccountDAO: saving account with accountnr ="+account.getAccountnumber());
-		accountlist.add(account); // add the new
+		em.persist(account); // add the new
 	}
 
 	public void updateAccount(Account account) {
+		EntityManager em = EntityManagerHelper.getCurrent();
 		// System.out.println("AccountDAO: update account with accountnr ="+account.getAccountnumber());
 		Account accountexist = loadAccount(account.getAccountnumber());
 		if (accountexist != null) {
-			accountlist.remove(accountexist); // remove the old
-			accountlist.add(account); // add the new
+			em.remove(accountexist); // remove the old
+			em.persist(account); // add the new
 		}
 
 	}
 
 	public Account loadAccount(long accountnumber) {
 		// System.out.println("AccountDAO: loading account with accountnr ="+accountnumber);
-		for (Account account : accountlist) {
+		for (Account account : getAccounts()) {
 			if (account.getAccountnumber() == accountnumber) {
 				return account;
 			}
@@ -33,7 +36,8 @@ public class AccountDAO implements IAccountDAO {
 	}
 
 	public Collection<Account> getAccounts() {
-		return accountlist;
+		EntityManager em = EntityManagerHelper.getCurrent();
+		return em.createQuery("From Account", Account.class).getResultList();
 	}
 
 }
