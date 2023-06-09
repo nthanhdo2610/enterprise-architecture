@@ -13,18 +13,19 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 //@Configuration
 public class MyWebAppInitializer implements WebApplicationInitializer {
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext container) throws ServletException {
         // Create the Spring 'root' application context
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(Config.class);
 
         // Manage the lifecycle of the root application context
-        servletContext.addListener(new ContextLoaderListener(rootContext));
+        container.addListener(new ContextLoaderListener(rootContext));
 
-        ServletRegistration.Dynamic student = servletContext.addServlet("Student", new StudentsCourseServlet());
-        student.addMapping("/StudentsCourseServlet");
+        // Register and map the dispatcher servlet
+//        ServletRegistration.Dynamic studentDispatcher = container.addServlet("StudentsCourseServlet", new StudentsCourseServlet());
+//        studentDispatcher.addMapping("/StudentsCourseServlet");
 
-        FilterRegistration.Dynamic openInView = servletContext.addFilter("OpenInView", new OpenEntityManagerInViewFilter());
+        FilterRegistration.Dynamic openInView = container.addFilter("OpenInView", new OpenEntityManagerInViewFilter());
         openInView.addMappingForUrlPatterns(null, true, "/*");
     }
 }
