@@ -1,9 +1,12 @@
 package cs544;
 
+import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -26,5 +29,8 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
 		appServlet.setLoadOnStartup(1);
 		appServlet.addMapping("/");
 
+        FilterRegistration.Dynamic filter = container.addFilter("openEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class);
+        filter.setInitParameter("singleSession", "true");
+        filter.addMappingForServletNames(null, true, "mvc");
     }
 }

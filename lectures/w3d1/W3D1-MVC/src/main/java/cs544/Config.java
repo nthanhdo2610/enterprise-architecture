@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
+@EnableJpaRepositories
 @EnableTransactionManagement
 @ComponentScan("cs544")
 public class Config implements WebMvcConfigurer {
@@ -49,7 +51,7 @@ public class Config implements WebMvcConfigurer {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root");
-		dataSource.setUrl("jdbc:mysql://localhost/cs544?useSSL=false");
+		dataSource.setUrl("jdbc:mysql://172.0.0.1:3306/cs544?useSSL=false");
 		return dataSource;
 	}
 
