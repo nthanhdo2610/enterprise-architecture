@@ -1,2 +1,2 @@
-INSERT INTO car(`year`, `color`, `make`, `model`) VALUES(1999, 'Silver', 'Volvo', 'S80');
-INSERT INTO car(`year`, `color`, `make`, `model`) VALUES(1997, 'Red', 'Honda', 'Accord');
+INSERT INTO book(title,ISBN,author,price) VALUES('Harry Potter', '80980', 'J. K. Rowling', 240.0);
+INSERT INTO book(title,ISBN,author,price) VALUES('Lord of the Rings', '88909', 'J. R. R. Tolkien', 190);
