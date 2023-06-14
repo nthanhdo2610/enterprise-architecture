@@ -1,4 +1,4 @@
-package cs544.cov2.config;
+package cs544;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer{
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login").setViewName("login");
-		registry.addViewController("/addContact").setViewName("addContact");
+		registry.addViewController("/books/add").setViewName("addBook");
 	}
 	
 	@Override

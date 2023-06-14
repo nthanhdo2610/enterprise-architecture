@@ -1,4 +1,4 @@
-package cs544.cov2.config;
+package cs544;
 
 import java.util.Properties;
 
@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan("cs544")
-@EnableJpaRepositories("cs544.cov2.dao")
+@EnableJpaRepositories("cs544")
 @EnableTransactionManagement
-public class Config {
+public class JdbcConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();

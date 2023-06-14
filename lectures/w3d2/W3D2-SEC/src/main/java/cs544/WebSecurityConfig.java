@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs544.cov1;
+package cs544;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,28 +26,24 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
+    @Bean
+    public WebSecurityCustomizer ignoringCustomizer() {
+        return (web) -> web
+                .debug(true)
+                .ignoring().requestMatchers("/js/**", "/css/**");
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/contact")
-                        .permitAll()
+        http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index", "/login", "/logout").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/books/add").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/books").hasRole("USER")
                 )
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/login", "/logout", "/accessDenied").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/**").hasAnyRole("ADMIN")
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                )
-                .exceptionHandling().accessDeniedPage("/accessDenied");
-
+                .formLogin(Customizer.withDefaults()).logout(Customizer.withDefaults());
         return http.build();
     }
 
