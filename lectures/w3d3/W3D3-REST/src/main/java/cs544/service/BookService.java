@@ -22,7 +22,8 @@ public class BookService {
     }
 
     public void add(Book book) {
-        bookDao.save(book);
+        Book b = bookDao.save(book);
+        book.setId(b.getId());
     }
 
     public Book get(int id) {
