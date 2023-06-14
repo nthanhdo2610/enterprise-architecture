@@ -1,5 +1,6 @@
-package cs544;
+package cs544.domain;
 
+import jakarta.persistence.Table;
 import org.hibernate.validator.constraints.Range;
 
 import jakarta.persistence.Entity;
@@ -7,9 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 @Entity
+@Table
 public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
-package cs544;
+package cs544.controller;
 
+import cs544.domain.Car;
+import cs544.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

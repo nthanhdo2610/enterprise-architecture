@@ -1,16 +1,18 @@
-package cs544;
+package cs544.service;
 
 import java.util.List;
 
+import cs544.dao.CarDao;
+import cs544.domain.Car;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class CarService {
-    private final ICarDao carDao;
+    private final CarDao carDao;
 
-    public CarService(ICarDao carDao) {
+    public CarService(CarDao carDao) {
         this.carDao = carDao;
     }
 
