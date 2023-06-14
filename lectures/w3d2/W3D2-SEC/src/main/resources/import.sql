@@ -1,1 +1,0 @@
-INSERT INTO Book(title, ISBN, author, price) VALUES('test', 'Silver', 'Volvo', 15.00   );
