@@ -1,0 +1,7 @@
+${AnsiColor.BRIGHT_GREEN} ,-----. ,---.  ,-----.  ,---.  ,---.
+${AnsiColor.BRIGHT_GREEN}'  .--./'   .-' |  .--' /    | /    |
+${AnsiColor.BRIGHT_GREEN}|  |    `.  `-. '--. `\/  '  |/  '  |
+${AnsiColor.BRIGHT_GREEN}'  '--'\.-'    |.--'  /'--|  |'--|  |
+${AnsiColor.BRIGHT_GREEN} `-----'`-----' `----'    `--'   `--'
+${AnsiColor.DEFAULT}
+Powered by Spring Boot ${spring-boot.version}

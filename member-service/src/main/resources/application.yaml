@@ -1,0 +1,22 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /member
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/cs544_member
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  mvc:
+    view:
+      prefix: /WEB-INF/views
+      suffix: .jsp
+#logging:
+#  level:
+#    root: DEBUG
