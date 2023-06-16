@@ -18,12 +18,14 @@ public class Game {
     private int goalHome;
     private int goalVisit;
     private String wonTeam;
+    private Integer durationMinutes;
 
     public Game(String leagueName, String teamNameHome, String teamNameVisitor) {
         this.leagueName = leagueName;
         this.teamNameHome = teamNameHome;
         this.teamNameVisitor = teamNameVisitor;
         this.status = "draft";
+        this.durationMinutes = 90;
     }
     @Override
     public String toString() {

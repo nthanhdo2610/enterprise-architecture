@@ -51,12 +51,16 @@ public class GameService {
         }
         return "Failed to score update";
     }
+    public String setGameStatus(Game game, String status){
+        game.setStatus(status);
+        gameDao.save(game);
+        return "STOPPED GAME";
+    }
     public String setStopToLive(Game game) {
         ResponseEntity<String> response = connectToStream(game, "stopGame");
         if (response.getStatusCode().is2xxSuccessful()) {
             if (game != null) {
-                game.setStatus("draft");
-                gameDao.save(game);
+                setGameStatus(game, "draft");
             }
             return "STOPPED";
         } else {

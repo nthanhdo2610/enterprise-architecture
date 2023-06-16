@@ -18,13 +18,8 @@ public class Game {
     private int goalHome;
     private int goalVisit;
     private String wonTeam;
+    private Integer durationMinutes;
 
-    public Game(String leagueName, String teamNameHome, String teamNameVisitor, String status) {
-        this.leagueName = leagueName;
-        this.teamNameHome = teamNameHome;
-        this.teamNameVisitor = teamNameVisitor;
-        this.status = status;
-    }
     @Override
     public String toString() {
         return "{" +

@@ -1,7 +1,5 @@
 package cs544.controller;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,18 +14,21 @@ public class StreamController {
     }
 
     @PostMapping("/startGame")
-	public String startGame(@RequestBody Game gameData) {
-        System.out.println("STARTED GAME*****"+gameData);
+	public String startGame(@RequestBody Game game) {
+        System.out.println("STARTED GAME*****"+game);
+        streamService.setGame(game);
 		return streamService.startGame();
 	}
     @PostMapping("/stopGame")
 	public String stopGame(@RequestBody Game game) {
         System.out.println("------------STOPPED GAME*****"+game);
+        streamService.setGame(game);
 		return streamService.stopGame();
 	}
     @PostMapping("/updateScore")
 	public String updateScore(@RequestBody Game game) {
         System.out.println("------------updateScore GAMMEE*****"+game);
+        streamService.setGame(game);
 		return streamService.updateScore();
 	}
 }

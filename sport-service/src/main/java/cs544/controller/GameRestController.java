@@ -55,6 +55,14 @@ public class GameRestController {
             return gameService.setStopToLive(gameService.getLiveGame());
         }
 	}
+    @PostMapping("/setStopFromStream")
+	public String setStopFromStream(@RequestBody Game game) {
+        if (game!=null){
+            return gameService.setGameStatus(game, "stop");
+        }else{
+            return "STOP FAILED FROM STREAM";
+        }
+	}
     @GetMapping("/getAllGame")
     public List<Game> getAll() {
         return gameService.getAll();
