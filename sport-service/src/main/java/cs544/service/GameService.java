@@ -22,7 +22,7 @@ public class GameService {
         return gameDao.findAll();
     }
     public Game add(Game game) {
-        if (hasLiveGame()) {
+        if (game.getStatus().equals("live") && hasLiveGame()) {
             System.out.println("One game status is already live");
             return null;
         } else {
@@ -36,10 +36,19 @@ public class GameService {
         gameDao.save(game);
     }
     public void delete(String id) {
-        gameDao.deleteById(id);
+        gameDao.delete(get(id));
     }
     public void deleteAll() {
         gameDao.deleteAll();
+    }
+    public void deleteAllOthers() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("status").ne("live"));
+        List<Game> gamesToDelete = mongoTemplate.find(query, Game.class);
+        for (Game game : gamesToDelete) {
+            System.out.println("delete "+game.getLeagueName());
+            gameDao.delete(game);
+        }
     }
     private boolean hasLiveGame() {
         Query query = Query.query(Criteria.where("status").is("live"));

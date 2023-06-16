@@ -24,12 +24,12 @@ public class GameRestController {
         this.gameService = gameService;
     }
     @GetMapping("/getAllGame")
-    public Game getAll() {
-        return gameService.getLiveGame();
+    public List<Game> getAll() {
+        return gameService.getAll();
     }
     @GetMapping("/getLiveGame")
-    public List<Game> getLiveGame() {
-        return gameService.getAll();
+    public Game getLiveGame() {
+        return gameService.getLiveGame();
     }
     @GetMapping("/game/{id}")
     public Game get(@PathVariable String id) {
@@ -54,5 +54,9 @@ public class GameRestController {
     @DeleteMapping("/game/deleteAll")
     public void deleteAll() {
         gameService.deleteAll();
+    }
+    @DeleteMapping("/game/deleteAllOthers")
+    public void deleteAllOthers() {
+        gameService.deleteAllOthers();
     }
 }
