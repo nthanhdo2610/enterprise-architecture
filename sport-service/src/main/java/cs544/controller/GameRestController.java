@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GameRestController {
@@ -19,11 +20,22 @@ public class GameRestController {
     public GameRestController(GameService gameService) {
         this.gameService = gameService;
     }
-    @PostMapping("/game/addGame")
+    @PostMapping("/setScore")
+	public String setScore(@RequestBody Map<String, Integer> scores) {
+        if (gameService.getLiveGame()==null){
+            return "WE DON'T LIVE HAVE GAME";
+        }else{
+            System.out.println("=------"+scores);
+            int homeScore = scores.getOrDefault("home", 0);
+            int visitScore = scores.getOrDefault("visit", 0);
+            return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore);
+        }
+	}
+    @PostMapping("/addGame")
 	public Game addGame(@RequestBody Game game) {
 		return gameService.add(game);
 	}
-    @PostMapping("/game/setStart")
+    @PostMapping("/setStart")
 	public String setStart() {
         if (gameService.getLiveGame()!=null){
             return "ALREADY STARTED";
@@ -35,27 +47,23 @@ public class GameRestController {
             }
         }
 	}
-    @PostMapping("/game/setStop")
+    @PostMapping("/setStop")
 	public String setStop() {
         if (gameService.getLiveGame()==null){
             return "THERE DOESN'T HAVE LIVE GAME";
         }else{
-            // if (gameService.getAll().size()==0){
-            //     return "WE DON'T HAVE GAME";
-            // }else{
-                return gameService.setStopToLive(gameService.getLiveGame());
-            // }
+            return gameService.setStopToLive(gameService.getLiveGame());
         }
 	}
-    @GetMapping("/game/getAllGame")
+    @GetMapping("/getAllGame")
     public List<Game> getAll() {
         return gameService.getAll();
     }
-    @GetMapping("/game/getLiveGame")
+    @GetMapping("/getLiveGame")
     public Game getLiveGame() {
         return gameService.getLiveGame();
     }
-    @GetMapping("/game/{id}")
+    @GetMapping("/{id}")
     public Game get(@PathVariable String id) {
         return gameService.get(id);
     }
@@ -63,7 +71,7 @@ public class GameRestController {
     @PostMapping
     public RedirectView add(@RequestBody Game game) {
         gameService.add(game);
-        return new RedirectView("/game/" + game.getGameId());
+        return new RedirectView("/" + game.getGameId());
     }
 
     @PutMapping
@@ -71,15 +79,15 @@ public class GameRestController {
         gameService.update(game);
     }
 
-    @DeleteMapping("/game/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         gameService.delete(id);
     }
-    @DeleteMapping("/game/deleteAll")
+    @DeleteMapping("/deleteAll")
     public void deleteAll() {
         gameService.deleteAll();
     }
-    @DeleteMapping("/game/deleteAllOthers")
+    @DeleteMapping("/deleteAllOthers")
     public void deleteAllOthers() {
         gameService.deleteAllOthers();
     }

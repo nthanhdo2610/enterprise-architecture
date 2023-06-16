@@ -28,10 +28,11 @@ public class Game {
     @Override
     public String toString() {
         return "{" +
-            " gameId='" + getGameId() + "'" +
             ", leagueName='" + getLeagueName() + "'" +
             ", teamNameHome='" + getTeamNameHome() + "'" +
             ", teamNameVisitor='" + getTeamNameVisitor() + "'" +
+            ", SCORE  (" + getGoalHome() + ":" + getGoalVisit() + ")" +
+            " gameId='" + getGameId() + "'" +
             "}";
     }
 }

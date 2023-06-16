@@ -23,4 +23,10 @@ public class StreamService {
         streamSender.sendMessage("stream_transfer", msg);
         return msg;
     }
+    public String updateScore() {
+        String msg = "GAME STREAM UpdateScore";
+        streamSender.sendMessage("stream_transfer", msg);
+        return msg;
+    }
+    
 }

@@ -31,7 +31,6 @@ public class GameService {
     public List<Game> getAll() {
         return gameDao.findAll();
     }
-
     public Game add(Game game) {
         if (game.getStatus().equals("live") && hasLiveGame()) {
             System.out.println("One game status is already live");
@@ -40,56 +39,40 @@ public class GameService {
             return gameDao.save(game);
         }
     }
-    
+    public String setScore(Game game, int goalHome, int goalVisit) {
+        if (game != null) {
+            game.setGoalHome(goalHome);
+            game.setGoalVisit(goalVisit);
+            gameDao.save(game);
+            ResponseEntity<String> response = connectToStream(game, "updateScore");
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return "HOME SCORED UPDATE";
+            }
+        }
+        return "Failed to score update";
+    }
     public String setStopToLive(Game game) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        HttpEntity<Game> requestEntity = new HttpEntity<>(game, headers);
-        // Call the external API using POST method
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8082/stream/UnPublishGame",
-                HttpMethod.POST,
-                requestEntity,
-                String.class);
-
+        ResponseEntity<String> response = connectToStream(game, "UnPublishGame");
         if (response.getStatusCode().is2xxSuccessful()) {
-            // API call succeeded, save the game
             if (game != null) {
                 game.setStatus("draft");
                 gameDao.save(game);
             }
             return "STOPPED";
         } else {
-            // API call failed, handle the error
             System.out.println("Failed to unpublish game");
             return "Failed to unpublish game";
         }
     }
     public String setStartToLive(Game game) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<Game> requestEntity = new HttpEntity<>(game, headers);
-
-        // Call the external API using POST method
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8082/stream/publishGame",
-                HttpMethod.POST,
-                requestEntity,
-                String.class);
-
+        ResponseEntity<String> response = connectToStream(game, "publishGame");
         if (response.getStatusCode().is2xxSuccessful()) {
-            // API call succeeded, save the game
             if (game != null) {
                 game.setStatus("live");
                 gameDao.save(game);
             }
             return "STARTED";
         } else {
-            // API call failed, handle the error
             System.out.println("Failed to publish game");
             return "Failed to publish game";
         }
@@ -134,5 +117,18 @@ public class GameService {
     public Game getNoLiveGame() {
         Query query = Query.query(Criteria.where("status").ne("live"));
         return mongoTemplate.findOne(query, Game.class);
+    }
+    public ResponseEntity<String> connectToStream(Game game, String method){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        HttpEntity<Game> requestEntity = new HttpEntity<>(game, headers);
+        // Call the external API using POST method
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:8082/stream/"+method,
+                HttpMethod.POST,
+                requestEntity,
+                String.class);
+        return response;
     }
 }

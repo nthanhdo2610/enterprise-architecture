@@ -13,14 +13,19 @@ public class StreamController {
         this.streamService = streamService;
     }
 
-    @PostMapping("/stream/publishGame")
+    @PostMapping("/publishGame")
 	public String publishGame(@RequestBody Game game) {
         System.out.println("PUBLISHED GAMMEE*****"+game);
 		return streamService.publishGame();
 	}
-    @PostMapping("/stream/UnPublishGame")
+    @PostMapping("/UnPublishGame")
 	public String UnPublishGame(@RequestBody Game game) {
         System.out.println("------------UNPUBLISHED GAMMEE*****"+game);
 		return streamService.UnPublishGame();
+	}
+    @PostMapping("/updateScore")
+	public String updateScore(@RequestBody Game game) {
+        System.out.println("------------updateScore GAMMEE*****"+game);
+		return streamService.updateScore();
 	}
 }
