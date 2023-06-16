@@ -25,4 +25,13 @@ public class Game {
         this.teamNameVisitor = teamNameVisitor;
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return "{" +
+            " gameId='" + getGameId() + "'" +
+            ", leagueName='" + getLeagueName() + "'" +
+            ", teamNameHome='" + getTeamNameHome() + "'" +
+            ", teamNameVisitor='" + getTeamNameVisitor() + "'" +
+            "}";
+    }
 }

@@ -30,27 +30,14 @@ public class StreamService {
     }
 
     public String publishGame() {
-        streamSender.sendMessage("hello", "GAME STREAM PUBLISH");
-        return "GAME STREAM PUBLISH";
+        String msg = "GAME STREAM PUBLISH";
+        streamSender.sendMessage("stream_transfer", msg);
+        return msg;
     }
 
-    // @PostConstruct
-    // public void startListening() {
-    //     MessageListenerContainer container = new DefaultMessageListenerContainer(mongoTemplate);
-    //     ChangeStreamOptions options = ChangeStreamOptions.builder()
-    //             .filter(mongoTemplate.query(Game.class).matching(Query.query(Criteria.where("status").is("live"))))
-    //             .returnFullDocumentOnUpdate()
-    //             .build();
-
-    //     container.register(ChangeStreamRequest.builder()
-    //             .collection("yourCollection")
-    //             .options(options)
-    //             .targetType(Game.class)
-    //             .publishTo(message -> {
-    //                 // Process the changed document here
-    //                 System.out.println("Received document: " + message.getBody());
-    //             })
-    //             .build());
-    //     container.start();
-    // }
+    public String UnPublishGame() {
+        String msg = "GAME STREAM UNPUBLISH";
+        streamSender.sendMessage("stream_transfer", msg);
+        return msg;
+    }
 }

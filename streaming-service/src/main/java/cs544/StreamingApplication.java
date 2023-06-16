@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 public class StreamingApplication {
     @Bean
     public Queue hello() {
-        return new Queue("hello");
+        return new Queue("stream_transfer");
     }
     public static void main(String[] args) {
         SpringApplication.run(StreamingApplication.class, args);

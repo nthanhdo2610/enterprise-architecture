@@ -25,7 +25,6 @@ public class GameRestController {
 	}
     @PostMapping("/game/setStart")
 	public String setStart() {
-    System.out.println("======"+gameService.getLiveGame());
         if (gameService.getLiveGame()!=null){
             return "ALREADY STARTED";
         }else{
@@ -34,6 +33,18 @@ public class GameRestController {
             }else{
                 return gameService.setStartToLive(gameService.getNoLiveGame());
             }
+        }
+	}
+    @PostMapping("/game/setStop")
+	public String setStop() {
+        if (gameService.getLiveGame()==null){
+            return "THERE DOESN'T HAVE LIVE GAME";
+        }else{
+            // if (gameService.getAll().size()==0){
+            //     return "WE DON'T HAVE GAME";
+            // }else{
+                return gameService.setStopToLive(gameService.getLiveGame());
+            // }
         }
 	}
     @GetMapping("/game/getAllGame")

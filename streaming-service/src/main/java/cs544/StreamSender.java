@@ -17,9 +17,9 @@ public class StreamSender implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        String queue = "hello";
-        String msg = "Hello World!";
-        template.convertAndSend(queue, msg);
-        System.out.println("Sent: " + msg +" to: " + queue);
+        // String queue = "hello";
+        // String msg = "Hello World!";
+        // template.convertAndSend(queue, msg);
+        // System.out.println("Sent: " + msg +" to: " + queue);
     }
 }
