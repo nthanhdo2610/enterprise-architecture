@@ -1,0 +1,15 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /sport
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/gameDb
+  mvc:
+    view:
+      prefix: /WEB-INF/views
+      suffix: .jsp
+#logging:
+#  level:
+#    root: DEBUG
