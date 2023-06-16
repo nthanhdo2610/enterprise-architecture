@@ -2,14 +2,14 @@ package cs544.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+// import org.springframework.data.annotation.Id;
+// import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document
+// @Document
 public class Game {
-	@Id
+	// @Id
 	private String gameId;
 	private String leagueName;
     private String teamNameHome;
