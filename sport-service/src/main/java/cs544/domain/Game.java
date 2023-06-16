@@ -19,10 +19,19 @@ public class Game {
     private int goalVisit;
     private String wonTeam;
 
-    public Game(String leagueName, String teamNameHome, String teamNameVisitor, String status) {
+    public Game(String leagueName, String teamNameHome, String teamNameVisitor) {
         this.leagueName = leagueName;
         this.teamNameHome = teamNameHome;
         this.teamNameVisitor = teamNameVisitor;
-        this.status = status;
+        this.status = "draft";
+    }
+    @Override
+    public String toString() {
+        return "{" +
+            " gameId='" + getGameId() + "'" +
+            ", leagueName='" + getLeagueName() + "'" +
+            ", teamNameHome='" + getTeamNameHome() + "'" +
+            ", teamNameVisitor='" + getTeamNameVisitor() + "'" +
+            "}";
     }
 }

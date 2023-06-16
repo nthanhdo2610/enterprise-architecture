@@ -16,18 +16,31 @@ import java.util.List;
 @RestController
 public class GameRestController {
     private final GameService gameService;
-    @PostMapping("/addGame")
-	public Game addUser(@RequestBody Game game) {
-		return gameService.add(game);
-	}
     public GameRestController(GameService gameService) {
         this.gameService = gameService;
     }
-    @GetMapping("/getAllGame")
+    @PostMapping("/game/addGame")
+	public Game addGame(@RequestBody Game game) {
+		return gameService.add(game);
+	}
+    @PostMapping("/game/setStart")
+	public String setStart() {
+    System.out.println("======"+gameService.getLiveGame());
+        if (gameService.getLiveGame()!=null){
+            return "ALREADY STARTED";
+        }else{
+            if (gameService.getAll().size()==0){
+                return "WE DON'T HAVE GAME";
+            }else{
+                return gameService.setStartToLive(gameService.getNoLiveGame());
+            }
+        }
+	}
+    @GetMapping("/game/getAllGame")
     public List<Game> getAll() {
         return gameService.getAll();
     }
-    @GetMapping("/getLiveGame")
+    @GetMapping("/game/getLiveGame")
     public Game getLiveGame() {
         return gameService.getLiveGame();
     }

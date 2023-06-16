@@ -21,7 +21,8 @@ public class StreamController {
     }
 
     @PostMapping("/stream/publishGame")
-	public String publishGame() {
+	public String publishGame(@RequestBody Game game) {
+        System.out.println("GAMMEE*****"+game);
 		return streamService.publishGame();
 	}
     
