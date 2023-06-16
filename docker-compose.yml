@@ -1,0 +1,44 @@
+version: '2'
+services:
+  mk-mysql:
+    container_name: mk-mysql
+    image: mysql/mysql-server:latest
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cs544_auth
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - cs544
+  auth-service:
+    depends_on:
+      - mk-mysql
+    container_name: auth-service
+    build:
+      context: auth-service
+      dockerfile: Dockerfile
+    restart: on-failure
+    image: cs544/auth-service:1.0-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url"  : "jdbc:mysql://mk-mysql/cs544_auth?useSSL=false",
+            "spring.datasource.username" : "root",
+            "spring.datasource.password" : "root",
+            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
+            "spring.jpa.hibernate.ddl-auto" : "create-drop"
+          }'
+      stdin_open: true
+      tty: true
+    networks:
+      - cs544
+networks:
+  cs544:
+    driver: bridge
+volumes:
+  db:
