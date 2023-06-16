@@ -2,6 +2,7 @@ package cs544.service;
 
 import cs544.StreamSender;
 import cs544.domain.Game;
+import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.http.HttpEntity;
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 @Service
 @Transactional
 @Setter
+@Getter
 public class StreamService {
     private Timer timer;
 
@@ -50,6 +52,7 @@ public class StreamService {
     }
     public void decreaseMinutes() {
         if (game!=null){
+            System.out.println("game.getDurationMinutes()"+game.getDurationMinutes());
             if (game.getDurationMinutes()==0){
                 ResponseEntity<String> response = connectToStream(game, "setStopFromStream");
                 if (response.getStatusCode().is2xxSuccessful()) {
@@ -62,7 +65,6 @@ public class StreamService {
                 game.setDurationMinutes(game.getDurationMinutes()-1);
                 streamSender.sendMessage("stream_transfer", msg);
             }
-            
         }else{
             if (timer != null) {
                 timer.cancel();

@@ -26,7 +26,8 @@ public class Game {
             ", leagueName='" + getLeagueName() + "'" +
             ", teamNameHome='" + getTeamNameHome() + "'" +
             ", teamNameVisitor='" + getTeamNameVisitor() + "'" +
-            ", SCORE  (" + getGoalHome() + ":" + getGoalVisit() + ")" +
+            ", SCORE (" + getGoalHome() + ":" + getGoalVisit() + ")" +
+            ", Duration: " + getDurationMinutes() + 
             " gameId='" + getGameId() + "'" +
             "}";
     }

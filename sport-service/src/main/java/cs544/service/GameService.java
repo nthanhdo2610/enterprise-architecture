@@ -52,16 +52,19 @@ public class GameService {
         return "Failed to score update";
     }
     public String setGameStatus(Game game, String status){
+        if (status=="live"){
+            game.setDurationMinutes(90);
+        }else{
+            game.setDurationMinutes(0);
+        }
         game.setStatus(status);
         gameDao.save(game);
-        return "STOPPED GAME";
+        return status+" GAME";
     }
     public String setStopToLive(Game game) {
+        setGameStatus(game, "draft");
         ResponseEntity<String> response = connectToStream(game, "stopGame");
         if (response.getStatusCode().is2xxSuccessful()) {
-            if (game != null) {
-                setGameStatus(game, "draft");
-            }
             return "STOPPED";
         } else {
             System.out.println("Failed to unpublish game");
@@ -69,12 +72,10 @@ public class GameService {
         }
     }
     public String setStartToLive(Game game) {
+        setGameStatus(game, "live");
         ResponseEntity<String> response = connectToStream(game, "startGame");
         if (response.getStatusCode().is2xxSuccessful()) {
-            if (game != null) {
-                game.setStatus("live");
-                gameDao.save(game);
-            }
+            
             return "STARTED";
         } else {
             System.out.println("Failed to publish game");
