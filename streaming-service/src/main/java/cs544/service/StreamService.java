@@ -12,14 +12,14 @@ public class StreamService {
         this.streamSender = streamSender;
     }
 
-    public String publishGame() {
-        String msg = "GAME STREAM PUBLISH";
+    public String startGame() {
+        String msg = "GAME STREAM START";
         streamSender.sendMessage("stream_transfer", msg);
         return msg;
     }
 
-    public String UnPublishGame() {
-        String msg = "GAME STREAM UNPUBLISH";
+    public String stopGame() {
+        String msg = "GAME STREAM STOP";
         streamSender.sendMessage("stream_transfer", msg);
         return msg;
     }

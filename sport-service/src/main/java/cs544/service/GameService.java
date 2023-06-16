@@ -46,13 +46,13 @@ public class GameService {
             gameDao.save(game);
             ResponseEntity<String> response = connectToStream(game, "updateScore");
             if (response.getStatusCode().is2xxSuccessful()) {
-                return "HOME SCORED UPDATE";
+                return "UPDATED GAME SCORE"+game.toString();
             }
         }
         return "Failed to score update";
     }
     public String setStopToLive(Game game) {
-        ResponseEntity<String> response = connectToStream(game, "UnPublishGame");
+        ResponseEntity<String> response = connectToStream(game, "stopGame");
         if (response.getStatusCode().is2xxSuccessful()) {
             if (game != null) {
                 game.setStatus("draft");
@@ -65,7 +65,7 @@ public class GameService {
         }
     }
     public String setStartToLive(Game game) {
-        ResponseEntity<String> response = connectToStream(game, "publishGame");
+        ResponseEntity<String> response = connectToStream(game, "startGame");
         if (response.getStatusCode().is2xxSuccessful()) {
             if (game != null) {
                 game.setStatus("live");
