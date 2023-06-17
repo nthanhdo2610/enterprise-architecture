@@ -53,8 +53,18 @@ public class GameService {
     }
     public String setGameStatus(Game game, String status){
         if (status=="live"){
+            game.setGoalHome(0);
+            game.setGoalVisit(0);
+            game.setWonTeam(null);
             game.setDurationMinutes(90);
         }else{
+            if (game.getGoalHome() > game.getGoalVisit()){
+                game.setWonTeam(game.getTeamNameHome());
+            }else if (game.getGoalHome() < game.getGoalVisit()) {
+                game.setWonTeam(game.getTeamNameVisitor());
+            }else{
+                game.setWonTeam("Draw");
+            }
             game.setDurationMinutes(0);
         }
         game.setStatus(status);
