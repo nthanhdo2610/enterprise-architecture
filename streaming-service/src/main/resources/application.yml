@@ -2,12 +2,12 @@ server:
   port: 8082
   servlet:
     context-path: /stream
-spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 #logging:
 #  level:
 #    root: DEBUG

@@ -2,13 +2,13 @@ server:
   port: 8083
   servlet:
     context-path: /member
-spring:
-  data:
-    mongodb:
-      username: root
-      password: root
-      host: localhost
-      port: 27018
+#spring:
+#  data:
+#    mongodb:
+#      username: root
+#      password: root
+#      host: localhost
+#      port: 27017
 #logging:
 #  level:
 #    root: DEBUG
