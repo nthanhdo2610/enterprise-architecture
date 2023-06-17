@@ -1,5 +1,6 @@
 FROM openjdk:17
-VOLUME /tmp
-EXPOSE 8082
-COPY target/*.jar sport-service.jar
-ENTRYPOINT ["java", "-jar", "/sport-service.jar"]
+ARG JAR_FILE
+WORKDIR /app
+COPY target/${JAR_FILE} ${JAR_FILE}
+EXPOSE ${SERVER_PORT}
+CMD ["java", "-jar", "${JAR_FILE}"]

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: member-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: member-service
+  template:
+    metadata:
+      labels:
+        app: member-service
+    spec:
+      containers:
+        - name: member-service
+          image: cs544/member-service:1.0-SNAPSHOT
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb://root:root@mongodb2:27018/cs544_member"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: cs544_member
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082

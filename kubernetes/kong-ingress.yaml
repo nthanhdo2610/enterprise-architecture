@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kong-ingress
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /auth-service
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /member-service
+            pathType: Prefix
+            backend:
+              service:
+                name: member-service
+                port:
+                  number: 8083
+          - path: /sport-service
+            pathType: Prefix
+            backend:
+              service:
+                name: sport-service
+                port:
+                  number: 8081
+          - path: /streaming-service
+            pathType: Prefix
+            backend:
+              service:
+                name: streaming-service
+                port:
+                  number: 8082

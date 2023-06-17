@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-member
+spec:
+  selector:
+    app: mongodb-member
+  ports:
+    - protocol: TCP
+      port: 27018
+      targetPort: 27018

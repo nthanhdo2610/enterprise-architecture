@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-sport
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-sport
+  template:
+    metadata:
+      labels:
+        app: mongodb-sport
+    spec:
+      containers:
+        - name: mongodb-sport
+          image: mongo:4.4
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: root
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-sport-volume
+              mountPath: /data/db

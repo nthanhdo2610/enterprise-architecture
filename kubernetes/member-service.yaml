@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: member-service
+spec:
+  selector:
+    app: member-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082

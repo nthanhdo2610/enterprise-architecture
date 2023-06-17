@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streaming-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streaming-service
+  template:
+    metadata:
+      labels:
+        app: streaming-service
+    spec:
+      containers:
+        - name: streaming-service
+          image: cs544/streaming-service:1.0-SNAPSHOT
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: guest
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: guest
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083

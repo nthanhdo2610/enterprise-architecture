@@ -1,49 +1,129 @@
 version: '3.8'
+
+networks:
+  cs544:
+
 services:
   mysqldb:
     container_name: mysqldb
     image: mysql:8.0
     restart: unless-stopped
     environment:
-      - MYSQL_DATABASE= cs544_auth
-      - MYSQL_ROOT_PASSWORD= root
-      - MYSQL_ROOT_HOST= '%'
+      MYSQL_DATABASE: cs544_auth
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
     volumes:
       - db:/var/lib/mysql
     networks:
       - cs544
-  auth-service:
-    depends_on:
-      - mysqldb
-    container_name: auth-service
-    build:
-      context: auth-service
-      dockerfile: Dockerfile
-    #    restart: on-failure
-    image: cs544/auth-service:1.0-SNAPSHOT
-    ports:
-      - "8080:8080"
-    expose:
-      - "8080"
+
+  mongodb-sport:
+    container_name: mongodb-sport
+    image: mongo:4.4
+    restart: unless-stopped
     environment:
-      SPRING_APPLICATION_JSON: '{
-            "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/cs544_auth?useSSL=false",
-            "spring.datasource.username" : "root",
-            "spring.datasource.password" : "root",
-            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
-            "spring.jpa.hibernate.ddl-auto" : "create-drop"
-          }'
-    stdin_open: true
-    tty: true
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - db1:/data/db
     networks:
       - cs544
-networks:
-  cs544:
-    driver: bridge
+
+  mongodb-member:
+    container_name: mongodb-member
+    image: mongo:4.4
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27018:27018"
+    volumes:
+      - db2:/data/db
+    networks:
+      - cs544
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cs544
+
+  auth-service:
+    container_name: auth-service
+    build: ./auth-service
+    image: cs544/auth-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/cs544_auth?useSSL=false
+    depends_on:
+      - mysqldb
+    networks:
+      - cs544
+
+  member-service:
+    container_name: member-service
+    build: ./member-service
+    image: cs544/member-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongodb-member:27018/cs544_member
+      SPRING_DATA_MONGODB_DATABASE: cs544_member
+    depends_on:
+      - mongodb-member
+    networks:
+      - cs544
+
+  sport-service:
+    container_name: sport-service
+    build: ./sport-service
+    image: cs544/sport-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongodb-sport:27017/cs544_sport
+      SPRING_DATA_MONGODB_DATABASE: cs544_sport
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - rabbitmq
+      - mongodb-sport
+    networks:
+      - cs544
+
+  streaming-service:
+    container_name: streaming-service
+    build: ./streaming-service
+    image: cs544/streaming-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - rabbitmq
+    networks:
+      - cs544
+
 volumes:
   db:
-    driver: bridge
+  db1:
+  db2:

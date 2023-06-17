@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sport-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sport-service
+  template:
+    metadata:
+      labels:
+        app: sport-service
+    spec:
+      containers:
+        - name: sport-service
+          image: cs544/sport-service:1.0-SNAPSHOT
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb://root:root@mongodb1:27017/cs544_sport"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: cs544_sport
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: guest
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: guest
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081

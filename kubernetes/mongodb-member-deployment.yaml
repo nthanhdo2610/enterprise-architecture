@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-member
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-member
+  template:
+    metadata:
+      labels:
+        app: mongodb-member
+    spec:
+      containers:
+        - name: mongodb-member
+          image: mongo:4.4
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: root
+          ports:
+            - containerPort: 27018
+          volumeMounts:
+            - name: mongodb-member-volume
+              mountPath: /data/db
