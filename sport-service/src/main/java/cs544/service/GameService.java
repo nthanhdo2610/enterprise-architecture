@@ -1,7 +1,5 @@
 package cs544.service;
 
-import cs544.dao.GameDao;
-import cs544.domain.Game;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import org.springframework.web.client.RestTemplate;
+
+import cs544.dao.GameDao;
+import cs544.domain.Game;
 
 @Service
 @Transactional
