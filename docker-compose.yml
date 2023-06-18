@@ -24,6 +24,7 @@ services:
     image: mongo:4.4
     restart: unless-stopped
     environment:
+      MONGO_INITDB_DATABASE: cs544_sport
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
@@ -38,6 +39,7 @@ services:
     image: mongo:4.4
     restart: unless-stopped
     environment:
+      MONGO_INITDB_DATABASE: cs544_member
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
@@ -80,7 +82,6 @@ services:
       - "8083:8083"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-#      SPRING_DATA_MONGODB_DATABASE: cs544_member
     depends_on:
       - mongodb-member
     networks:
@@ -95,7 +96,6 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-#      SPRING_DATA_MONGODB_DATABASE: cs544_sport
     depends_on:
       - rabbitmq
       - mongodb-sport
