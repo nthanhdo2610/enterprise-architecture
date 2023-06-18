@@ -8,10 +8,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.beans.factory.annotation.Value;
 
 public class TokenServer {
     public TokenServer() {
     }
+    
 
     public boolean verifyToken(String token) {
         ResponseEntity<String> response = connectToTokenServer(token);
@@ -23,28 +25,26 @@ public class TokenServer {
             return false;
         }
     }
-
+    @Value("${services.auth.host}")
+    private String authHost;
+    @Value("${services.auth.port}")
+    private int authPort;
+    @Value("${services.auth.context-path}")
+    private String authContextPath;
     public ResponseEntity<String> connectToTokenServer(String token) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-
-        // Create the URI with the token as a query parameter
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8080/auth/")
+        String auth_url = "http://"+authHost+":"+authPort+authContextPath;
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(auth_url)
                 .queryParam("token", token);
-
-        // Build the URI
         URI uri = builder.build().toUri();
-
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        // Call the external API using GET method
         ResponseEntity<String> response = restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 requestEntity,
                 String.class);
-
         return response;
     }
 
