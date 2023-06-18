@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = "stream_transfer")
+@RabbitListener(queues = "stream_transfer_result")
 public class StreamReceiver {
 
     @RabbitHandler

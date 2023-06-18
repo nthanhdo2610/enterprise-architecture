@@ -36,4 +36,8 @@ public class Game {
             ", teamNameVisitor='" + getTeamNameVisitor() + "'" +
             "}";
     }
+    public String getGameResult(){
+        return "GAME RESULT (" + getGoalHome() + ":" + getGoalVisit() + ") MINUTES: "
+                        + getDurationMinutes();
+    }
 }
