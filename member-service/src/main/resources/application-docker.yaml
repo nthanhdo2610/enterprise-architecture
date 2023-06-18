@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:root@mongodb-member/cs544_member
+      uri: mongodb://root:root@mongodb/cs544
 
 services:
   auth:

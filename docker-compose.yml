@@ -9,7 +9,7 @@ services:
     image: mysql:8.0
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: cs544_auth
+      MYSQL_DATABASE: cs544
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
     ports:
@@ -17,37 +17,27 @@ services:
     volumes:
       - db:/var/lib/mysql
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - mysqldb
 
-  mongodb-sport:
-    container_name: mongodb-sport
+  mongodb:
+    container_name: mongodb
     image: mongo:4.4
     restart: unless-stopped
     environment:
-      MONGO_INITDB_DATABASE: cs544_sport
+      MONGO_INITDB_DATABASE: cs544
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
     volumes:
       - db1:/data/db
+#      - ./init-mongodb.sh:/docker-entrypoint-initdb.d/init-mongodb.sh:ro
     networks:
-      - cs544
-
-  mongodb-member:
-    container_name: mongodb-member
-    image: mongo:4.4
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_DATABASE: cs544_member
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    ports:
-      - "27018:27018"
-    volumes:
-      - db2:/data/db
-    networks:
-      - cs544
+      cs544:
+        aliases:
+          - mongodb
 
   rabbitmq:
     container_name: rabbitmq
@@ -57,7 +47,9 @@ services:
       - "5672:5672"
       - "15672:15672"
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - rabbitmq
 
   auth-service:
     container_name: auth-service
@@ -71,7 +63,9 @@ services:
     depends_on:
       - mysqldb
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - auth-service
 
   member-service:
     container_name: member-service
@@ -83,9 +77,11 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
-      - mongodb-member
+      - mongodb
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - member-service
 
   sport-service:
     container_name: sport-service
@@ -98,9 +94,11 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - rabbitmq
-      - mongodb-sport
+      - mongodb
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - sport-service
 
   streaming-service:
     container_name: streaming-service
@@ -114,9 +112,10 @@ services:
     depends_on:
       - rabbitmq
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - streaming-service
 
 volumes:
   db:
   db1:
-  db2:
