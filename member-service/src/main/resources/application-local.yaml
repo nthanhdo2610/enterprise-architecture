@@ -2,6 +2,11 @@ server:
   port: 8083
   servlet:
     context-path: /member
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
 services:
   auth:
     host: auth-service

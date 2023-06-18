@@ -2,6 +2,11 @@ server:
   port: 8082
   servlet:
     context-path: /stream
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
 spring:
   rabbitmq:
     host: rabbitmq

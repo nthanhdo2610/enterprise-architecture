@@ -6,7 +6,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:root@mongodb/cs544
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
 services:
   auth:
     host: auth-service

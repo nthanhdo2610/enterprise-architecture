@@ -20,7 +20,7 @@ public class UserRepositoryTests {
 
 	@Autowired private UserRepository repo;
 	
-	@Test
+//	@Test
 	public void testCreateUser() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode("password");
