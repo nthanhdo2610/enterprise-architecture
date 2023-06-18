@@ -1,21 +1,21 @@
 server:
-  port: 8081
+  port: 8083
   servlet:
-    context-path: /sport
-
+    context-path: /member
 spring:
   data:
     mongodb:
-      uri: mongodb://root:root@mongodb-sport/cs544_sport
+      uri: mongodb://root:root@mongodb-member/cs544_member
+
 services:
   auth:
     host: auth-service
     port: 8080
     context-path: /auth/
   streaming:
-    host: streaming-service
-    port: 8082
-    context-path: /stream/
+    host: sport-service
+    port: 8081
+    context-path: /sport/
 #logging:
 #  level:
 #    root: DEBUG

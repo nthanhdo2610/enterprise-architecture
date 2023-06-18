@@ -79,8 +79,8 @@ services:
     ports:
       - "8083:8083"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongodb-member:27018/cs544_member
-      SPRING_DATA_MONGODB_DATABASE: cs544_member
+      SPRING_PROFILES_ACTIVE: docker
+#      SPRING_DATA_MONGODB_DATABASE: cs544_member
     depends_on:
       - mongodb-member
     networks:
@@ -95,7 +95,7 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATA_MONGODB_DATABASE: cs544_sport
+#      SPRING_DATA_MONGODB_DATABASE: cs544_sport
     depends_on:
       - rabbitmq
       - mongodb-sport

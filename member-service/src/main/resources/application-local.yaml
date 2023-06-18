@@ -1,0 +1,23 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /member
+services:
+  auth:
+    host: auth-service
+    port: 8080
+    context-path: /auth/
+  streaming:
+    host: sport-service
+    port: 8081
+    context-path: /sport/
+#spring:
+#  data:
+#    mongodb:
+#      username: root
+#      password: root
+#      host: localhost
+#      port: 27017
+#logging:
+#  level:
+#    root: DEBUG
