@@ -32,6 +32,7 @@ public class GameService {
     public List<Game> getAll() {
         return gameDao.findAll();
     }
+
     public Game add(Game game) {
         if (game.getStatus().equals("live") && hasLiveGame()) {
             System.out.println("One game status is already live");
@@ -40,41 +41,44 @@ public class GameService {
             return gameDao.save(game);
         }
     }
-    public String setScore(Game game, int goalHome, int goalVisit) {
+
+    public String setScore(Game game, int goalHome, int goalVisit, String token) {
         if (game != null) {
             game.setGoalHome(goalHome);
             game.setGoalVisit(goalVisit);
             gameDao.save(game);
-            ResponseEntity<String> response = connectToStream(game, "updateScore");
+            ResponseEntity<String> response = connectToStream(game, "updateScore", token);
             if (response.getStatusCode().is2xxSuccessful()) {
-                return "UPDATED GAME SCORE"+game.toString();
+                return "UPDATED GAME SCORE" + game.toString();
             }
         }
         return "Failed to score update";
     }
-    public String setGameStatus(Game game, String status){
-        if (status=="live"){
+
+    public String setGameStatus(Game game, String status) {
+        if (status == "live") {
             game.setGoalHome(0);
             game.setGoalVisit(0);
             game.setWonTeam(null);
             game.setDurationMinutes(90);
-        }else{
-            if (game.getGoalHome() > game.getGoalVisit()){
+        } else {
+            if (game.getGoalHome() > game.getGoalVisit()) {
                 game.setWonTeam(game.getTeamNameHome());
-            }else if (game.getGoalHome() < game.getGoalVisit()) {
+            } else if (game.getGoalHome() < game.getGoalVisit()) {
                 game.setWonTeam(game.getTeamNameVisitor());
-            }else{
+            } else {
                 game.setWonTeam("Draw");
             }
             game.setDurationMinutes(0);
         }
         game.setStatus(status);
         gameDao.save(game);
-        return status+" GAME";
+        return status + " GAME";
     }
-    public String setStopToLive(Game game) {
+
+    public String setStopToLive(Game game, String token) {
         setGameStatus(game, "draft");
-        ResponseEntity<String> response = connectToStream(game, "stopGame");
+        ResponseEntity<String> response = connectToStream(game, "stopGame", token);
         if (response.getStatusCode().is2xxSuccessful()) {
             return "STOPPED";
         } else {
@@ -82,11 +86,12 @@ public class GameService {
             return "Failed to unpublish game";
         }
     }
-    public String setStartToLive(Game game) {
+
+    public String setStartToLive(Game game, String token) {
         setGameStatus(game, "live");
-        ResponseEntity<String> response = connectToStream(game, "startGame");
+        ResponseEntity<String> response = connectToStream(game, "startGame", token);
         if (response.getStatusCode().is2xxSuccessful()) {
-            
+
             return "STARTED";
         } else {
             System.out.println("Failed to publish game");
@@ -134,17 +139,21 @@ public class GameService {
         Query query = Query.query(Criteria.where("status").ne("live"));
         return mongoTemplate.findOne(query, Game.class);
     }
-    public ResponseEntity<String> connectToStream(Game game, String method){
+
+    public ResponseEntity<String> connectToStream(Game game, String method, String token) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         HttpEntity<Game> requestEntity = new HttpEntity<>(game, headers);
+        // Build the URL with the token query parameter
+        String url = "http://localhost:8082/stream/" + method + "?token=" + token;
         // Call the external API using POST method
         ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8082/stream/"+method,
+                url,
                 HttpMethod.POST,
                 requestEntity,
                 String.class);
         return response;
     }
+
 }

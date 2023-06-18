@@ -34,7 +34,7 @@ public class GameRestController {
                 System.out.println("=------" + scores);
                 int homeScore = scores.getOrDefault("home", 0);
                 int visitScore = scores.getOrDefault("visit", 0);
-                return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore);
+                return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore, token);
             }
         } else {
             return "YOU NEED TO TRANSFER TOKEN";
@@ -59,7 +59,7 @@ public class GameRestController {
                 if (gameService.getAll().size() == 0) {
                     return "WE DON'T HAVE GAME";
                 } else {
-                    return gameService.setStartToLive(gameService.getNoLiveGame());
+                    return gameService.setStartToLive(gameService.getNoLiveGame(), token);
                 }
             }
         } else {
@@ -73,7 +73,7 @@ public class GameRestController {
             if (gameService.getLiveGame() == null) {
                 return "THERE DOESN'T HAVE LIVE GAME";
             } else {
-                return gameService.setStopToLive(gameService.getLiveGame());
+                return gameService.setStopToLive(gameService.getLiveGame(), token);
             }
         } else {
             return "YOU NEED TO TRANSFER TOKEN";
