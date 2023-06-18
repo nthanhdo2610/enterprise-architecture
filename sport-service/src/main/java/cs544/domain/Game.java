@@ -37,7 +37,7 @@ public class Game {
             "}";
     }
     public String getGameResult(){
-        return "GAME RESULT (" + getGoalHome() + ":" + getGoalVisit() + ") MINUTES: "
+        return "GAME RESULT "+getLeagueName()+" "+getTeamNameHome()+" VS "+getTeamNameVisitor()+" (" + getGoalHome() + ":" + getGoalVisit() + ") MINUTES: "
                         + getDurationMinutes();
     }
 }
