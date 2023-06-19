@@ -23,21 +23,21 @@ services:
         aliases:
           - kong-database
 
-#  kong-migration:
-#    container_name: kong-migration
-#    image: ${KONG_DOCKER_TAG:-kong:latest}
-#    command: sh -c "kong migrations bootstrap && sleep 10 && kong migrations finish"
-#    restart: on-failure
-#    depends_on:
-#      - kong-database
-#    environment:
-#      KONG_DATABASE: postgres
-#      KONG_PG_HOST: kong-database
-#      KONG_PG_DATABASE: kong
-#      KONG_PG_USER: kong
-#      KONG_PG_PASSWORD: ${KONG_PG_PASSWORD:-kong}
-#    networks:
-#      - cs544
+  kong-migration:
+    container_name: kong-migration
+    image: ${KONG_DOCKER_TAG:-kong:latest}
+    command: sh -c "kong migrations bootstrap && sleep 10 && kong migrations finish"
+    restart: on-failure
+    depends_on:
+      - kong-database
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_DATABASE: kong
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: ${KONG_PG_PASSWORD:-kong}
+    networks:
+      - cs544
 
   kong:
     container_name: kong
@@ -70,15 +70,15 @@ services:
         aliases:
           - kong
 
-#  konga-prepare:
-#    container_name: kong-prepare
-#    image: pantsel/konga:latest
-#    command: "-c prepare -a postgres -u postgresql://kong:${KONG_PG_PASSWORD:-kong}@kong-database:5432/konga"
-#    restart: on-failure
-#    depends_on:
-#      - kong-database
-#    networks:
-#      - cs544
+  konga-prepare:
+    container_name: kong-prepare
+    image: pantsel/konga:latest
+    command: "-c prepare -a postgres -u postgresql://kong:${KONG_PG_PASSWORD:-kong}@kong-database:5432/konga"
+    restart: on-failure
+    depends_on:
+      - kong-database
+    networks:
+      - cs544
 
   konga:
     container_name: konga
