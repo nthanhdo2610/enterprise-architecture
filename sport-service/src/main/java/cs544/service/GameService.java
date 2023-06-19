@@ -48,12 +48,15 @@ public class GameService {
     }
 
     public String setScore(Game game, int goalHome, int goalVisit, String token) {
+        int save_dur = gameMain.getDurationMinutes();
         this.gameMain = game;
         if (game != null) {
             game.setGoalHome(goalHome);
             game.setGoalVisit(goalVisit);
             gameDao.save(game);
-            this.gameMain = game;
+            System.out.println("save_dur"+save_dur);
+            gameMain = game;
+            gameMain.setDurationMinutes(save_dur);
             rabbitMqSender.sendMessage("stream_transfer_result", game.getGameResult());
             return "UPDATED GAME SCORE" + game.toString();
         }
@@ -106,7 +109,7 @@ public class GameService {
             }
         };
         // Schedule the timer task to run every 1 minute (60000 milliseconds)
-        timer.scheduleAtFixedRate(timerTask, 0, 1200);
+        timer.scheduleAtFixedRate(timerTask, 0, 1800);
     }
 
     public void decreaseMinutes() {

@@ -29,9 +29,9 @@ public class TokenServer {
     public String verifyTokenRole(String token) {
         ResponseEntity<String> response = connectToTokenServer(token, "role");
         if (response.getStatusCode().is2xxSuccessful()) {
-            System.out.println("====="+response);
+            // System.out.println("====="+response);
             if (response.getBody().equals("User is Admin")){
-                System.out.println("verifyTokenRole Token verification successful");
+                // System.out.println("verifyTokenRole Token verification successful");
                 return "ROLE_ADMIN";
             }else{
                 return "ROLE_USER";
