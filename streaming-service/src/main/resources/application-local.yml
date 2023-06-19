@@ -7,12 +7,11 @@ management:
     web:
       exposure:
         include: health
-#spring:
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /api.html
 #logging:
 #  level:
 #    root: DEBUG

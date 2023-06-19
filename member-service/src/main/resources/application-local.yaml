@@ -20,13 +20,11 @@ services:
     host: localhost
     port: 8081
     context-path: /sport/
-#spring:
-#  data:
-#    mongodb:
-#      username: root
-#      password: root
-#      host: localhost
-#      port: 27017
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /api.html
 #logging:
 #  level:
 #    root: DEBUG
