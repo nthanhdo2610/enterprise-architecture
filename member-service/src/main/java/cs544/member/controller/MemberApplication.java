@@ -3,7 +3,6 @@ package cs544.member.controller;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -12,7 +11,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @SpringBootApplication
-public class MemberApplication implements CommandLineRunner{
+public class MemberApplication {
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -21,10 +20,10 @@ public class MemberApplication implements CommandLineRunner{
         SpringApplication.run(MemberApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        System.out.println("----------------"+mongoTemplate.getCollectionNames());
-    }
+    // @Override
+    // public void run(String... args) throws Exception {
+    //     System.out.println("----------------"+mongoTemplate.getCollectionNames());
+    // }
 
     @Bean
     public MessageSource messageSource() {
