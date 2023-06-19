@@ -11,6 +11,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://mongodb/gameDb
+  rabbitmq:
+    host: rabbitmq
 services:
   auth:
     host: auth-service
