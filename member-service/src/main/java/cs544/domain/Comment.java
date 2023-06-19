@@ -15,14 +15,14 @@ public class Comment {
     @Id
     private String id;
 
-    private String messsage;
+    private String msg;
 
     private String gameId;
 
     private String memberName;
 
     public Comment(String message, String memberName) {
-        this.messsage = message;
+        this.msg = message;
         this.gameId = "";
         this.memberName = memberName;
     }
@@ -30,7 +30,7 @@ public class Comment {
     @Override
     public String toString() {
         return "{" +
-            " message='" + getMesssage() + "'" +
+            " message='" + getMsg() + "'" +
             ", gameID='" + getGameId() + "'" +
             ", memberName='" + getMemberName() + "'" +
             "}";
