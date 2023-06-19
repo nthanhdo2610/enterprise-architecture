@@ -17,11 +17,11 @@ public class SportApplication{
         SpringApplication.run(SportApplication.class, args);
     }
 
-    @Bean
-    public OpenAPI usersMicroserviceOpenAPI() {
-        return new OpenAPI()
-                .info(new Info().title("Your API Title")
-                        .description("Your API Description")
-                        .version("1.0"));
-    }
+//    @Bean
+//    public OpenAPI usersMicroserviceOpenAPI() {
+//        return new OpenAPI()
+//                .info(new Info().title("Your API Title")
+//                        .description("Your API Description")
+//                        .version("1.0"));
+//    }
 }
