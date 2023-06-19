@@ -7,6 +7,10 @@ management:
     web:
       exposure:
         include: health
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/gameDb
 services:
   auth:
     host: auth-service
