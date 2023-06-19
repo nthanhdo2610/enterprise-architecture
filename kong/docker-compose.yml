@@ -18,10 +18,12 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
+    networks:
+      - cs544
 
   kong-migration:
     image: ${KONG_DOCKER_TAG:-kong:latest}
-    command: kong migrations bootstrap
+    command: sh -c "sleep 10 && kong migrations up"
     restart: on-failure
     depends_on:
       - kong-database
@@ -31,12 +33,15 @@ services:
       KONG_PG_DATABASE: kong
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: ${KONG_PG_PASSWORD:-kong}
+    networks:
+      - cs544
 
   kong:
     image: ${KONG_DOCKER_TAG:-kong:latest}
     restart: on-failure
     depends_on:
       - kong-database
+      - kong-migration  # New dependency on the migration service
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: kong-database
@@ -56,6 +61,8 @@ services:
       - "8001:8001"
       - "8443:8443"
       - "8444:8444"
+    networks:
+      - cs544
 
   konga-prepare:
     image: pantsel/konga:latest
@@ -63,6 +70,8 @@ services:
     restart: on-failure
     depends_on:
       - kong-database
+    networks:
+      - cs544
 
   konga:
     image: pantsel/konga:latest
@@ -75,6 +84,12 @@ services:
       - kong-database
     ports:
       - "1337:1337"
+    networks:
+      - cs544
 
 volumes:
   kong_data: {}
+
+networks:
+  cs544:
+    external: true
