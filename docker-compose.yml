@@ -68,38 +68,38 @@ services:
         aliases:
           - auth-service
 
-#  member-service:
-#    container_name: member-service
-#    build: ./member-service
-#    image: cs544/member-service:1.0-SNAPSHOT
-#    restart: on-failure
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-#    depends_on:
-#      - mongodb
-#    networks:
-#      cs544:
-#        aliases:
-#          - member-service
+  member-service:
+    container_name: member-service
+    build: ./member-service
+    image: cs544/member-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - mongodb
+    networks:
+      cs544:
+        aliases:
+          - member-service
 
-#  sport-service:
-#    container_name: sport-service
-#    build: ./sport-service
-#    image: cs544/sport-service:1.0-SNAPSHOT
-#    restart: on-failure
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-#    depends_on:
-#      - rabbitmq
-#      - mongodb
-#    networks:
-#      cs544:
-#        aliases:
-#          - sport-service
+  sport-service:
+    container_name: sport-service
+    build: ./sport-service
+    image: cs544/sport-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - rabbitmq
+      - mongodb
+    networks:
+      cs544:
+        aliases:
+          - sport-service
 
   streaming-service:
     container_name: streaming-service
