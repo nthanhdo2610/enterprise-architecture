@@ -1,18 +1,17 @@
-package cs544.controller;
+package cs544.member.controller;
 
 import java.util.List;
 
+import cs544.member.controller.domain.Game;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cs544.domain.Comment;
-import cs544.domain.Game;
-import cs544.domain.Vote;
-import cs544.service.MemberService;
-import cs544.token.TokenServer;
+import cs544.member.controller.domain.Comment;
+import cs544.member.controller.domain.Vote;
+import cs544.member.controller.service.MemberService;
 
 @RestController
 public class MemberRestController {

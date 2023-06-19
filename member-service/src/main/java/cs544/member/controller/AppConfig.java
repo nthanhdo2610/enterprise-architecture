@@ -1,10 +1,8 @@
-package cs544;
+package cs544.member.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-
-import cs544.token.TokenServer;
 
 @Configuration
 public class AppConfig {

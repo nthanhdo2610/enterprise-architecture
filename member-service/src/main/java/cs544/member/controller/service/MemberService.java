@@ -1,23 +1,18 @@
-package cs544.service;
+package cs544.member.controller.service;
 
+import cs544.member.controller.domain.Game;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import org.springframework.web.client.RestTemplate;
 
-import cs544.dao.CommentDao;
-import cs544.dao.VoteDao;
-import cs544.domain.Comment;
-import cs544.domain.Vote;
-import cs544.domain.Game;
+import cs544.member.controller.dao.CommentDao;
+import cs544.member.controller.dao.VoteDao;
+import cs544.member.controller.domain.Comment;
+import cs544.member.controller.domain.Vote;
 
 @Service
 @Transactional
