@@ -31,7 +31,6 @@ public class GameRestController {
             if (gameService.getLiveGame() == null) {
                 return "WE DON'T LIVE HAVE GAME";
             } else {
-                System.out.println("=------" + scores);
                 int homeScore = scores.getOrDefault("home", 0);
                 int visitScore = scores.getOrDefault("visit", 0);
                 return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore, token);
@@ -43,16 +42,16 @@ public class GameRestController {
 
     @PostMapping("/addGame")
     public Game addGame(@RequestBody Game game, @RequestParam String token) {
-        // if (tokenServer.verifyToken(token)) {
+        if (tokenServer.verifyToken(token)) {
             return gameService.add(game);
-        // } else {
-        //     return null;
-        // }
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("/setStart")
     public String setStart(@RequestParam String token) {
-        // if (tokenServer.verifyToken(token)) {
+        if (tokenServer.verifyToken(token)) {
             if (gameService.getLiveGame() != null) {
                 return "ALREADY STARTED";
             } else {
@@ -62,9 +61,9 @@ public class GameRestController {
                     return gameService.setStartToLive(gameService.getNoLiveGame(), token);
                 }
             }
-        // } else {
-        //     return "YOU NEED TO TRANSFER TOKEN";
-        // }
+        } else {
+            return "YOU NEED TO TRANSFER TOKEN";
+        }
     }
 
     @PostMapping("/setStop")
@@ -95,20 +94,20 @@ public class GameRestController {
 
     @GetMapping("/getAllGame")
     public List<Game> getAll(@RequestParam String token) {
-        // if (tokenServer.verifyToken(token)) {
+        if (tokenServer.verifyToken(token)) {
             return gameService.getAll();
-        // } else {
-        //     return null;
-        // }
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/getLiveGame")
     public Game getLiveGame(@RequestParam String token) {
-        // if (tokenServer.verifyToken(token)) {
+        if (tokenServer.verifyToken(token)) {
             return gameService.getLiveGame();
-        // } else {
-        //     return null;
-        // }
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/{id}")
