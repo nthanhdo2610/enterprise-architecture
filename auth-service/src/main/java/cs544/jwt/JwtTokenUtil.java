@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import antlr.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -24,11 +25,20 @@ public class JwtTokenUtil {
 	
 	@Value("${app.jwt.secret}")
 	private String SECRET_KEY;
+
+	public Boolean isAdmin(String token) {
+		String isAdminBool = (String) Jwts.parser()
+				.setSigningKey(SECRET_KEY)
+				.parseClaimsJws(token)
+				.getHeader().get("isAdmin");
+		return isAdminBool.equals( "admin");
+	}
 	
 	public String generateAccessToken(User user) {
 		return Jwts.builder()
 				.setSubject(String.format("%s,%s", user.getId(), user.getEmail()))
-				.setIssuer("CodeJava")
+				.setIssuer("MIU")
+				.setHeaderParam("isAdmin", user.getRole())
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
 				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)

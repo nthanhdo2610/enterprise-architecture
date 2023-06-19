@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,11 @@ public class AuthApi {
 	@Autowired AuthenticationManager authManager;
 	@Autowired JwtTokenUtil jwtUtil;
 
+	@PutMapping("/")
+	public String validateIsAdmin(@RequestParam String token) {
+		return jwtUtil.isAdmin(token) ? "User is Admin" : "User is not Admin";
+	}
+
 
 	@GetMapping("/")
 	public ResponseEntity<?> login(@RequestParam String token) {
@@ -32,6 +38,7 @@ public class AuthApi {
 	@PostMapping("/")
 	public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
 		try {
+			System.out.println(request);
 			Authentication authentication = authManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							request.getEmail(), request.getPassword())
