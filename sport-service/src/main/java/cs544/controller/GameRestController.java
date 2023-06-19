@@ -12,6 +12,7 @@ import cs544.domain.Game;
 import cs544.service.GameService;
 import cs544.token.TokenServer;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +29,16 @@ public class GameRestController {
     @PostMapping("/setScore")
     public String setScore(@RequestBody Map<String, Integer> scores, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
-            if (gameService.getLiveGame() == null) {
-                return "WE DON'T LIVE HAVE GAME";
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
+                if (gameService.getLiveGame() == null) {
+                    return "WE DON'T LIVE HAVE GAME";
+                } else {
+                    int homeScore = scores.getOrDefault("home", 0);
+                    int visitScore = scores.getOrDefault("visit", 0);
+                    return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore, token);
+                }
             } else {
-                int homeScore = scores.getOrDefault("home", 0);
-                int visitScore = scores.getOrDefault("visit", 0);
-                return gameService.setScore(gameService.getLiveGame(), homeScore, visitScore, token);
+                return "YOU ARE NOT ADMIN";
             }
         } else {
             return "YOU NEED TO TRANSFER TOKEN";
@@ -43,7 +48,11 @@ public class GameRestController {
     @PostMapping("/addGame")
     public Game addGame(@RequestBody Game game, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
-            return gameService.add(game);
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
+                return gameService.add(game);
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
@@ -52,15 +61,17 @@ public class GameRestController {
     @PostMapping("/setStart")
     public String setStart(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
-            if (gameService.getLiveGame() != null) {
-                return "ALREADY STARTED";
-            } else {
-                if (gameService.getAll().size() == 0) {
-                    return "WE DON'T HAVE GAME";
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
+                if (gameService.getLiveGame() != null) {
+                    return "ALREADY STARTED";
                 } else {
-                    return gameService.setStartToLive(gameService.getNoLiveGame(), token);
+                    if (gameService.getAll().size() == 0) {
+                        return "WE DON'T HAVE GAME";
+                    } else {
+                        return gameService.setStartToLive(gameService.getNoLiveGame(), token);
+                    }
                 }
-            }
+            } else {return "YOU ARE NOT ADMIN";}
         } else {
             return "YOU NEED TO TRANSFER TOKEN";
         }
@@ -69,11 +80,13 @@ public class GameRestController {
     @PostMapping("/setStop")
     public String setStop(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
             if (gameService.getLiveGame() == null) {
                 return "THERE DOESN'T HAVE LIVE GAME";
             } else {
                 return gameService.setStopToLive(gameService.getLiveGame(), token);
             }
+            } else {return "YOU ARE NOT ADMIN";}
         } else {
             return "YOU NEED TO TRANSFER TOKEN";
         }
@@ -129,14 +142,18 @@ public class GameRestController {
     @DeleteMapping("/deleteAll")
     public void deleteAll(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
-            gameService.deleteAll();
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
+                gameService.deleteAll();
+            }
         }
     }
 
     @DeleteMapping("/deleteAllOthers")
     public void deleteAllOthers(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
-            gameService.deleteAllOthers();
+            if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
+                gameService.deleteAllOthers();
+            }
         }
     }
 }
