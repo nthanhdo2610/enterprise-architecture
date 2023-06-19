@@ -1,5 +1,7 @@
 package cs544.member.controller;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,11 +33,11 @@ public class MemberApplication implements CommandLineRunner{
         return messageSource;
     }
 
-    // @Bean
-    // public OpenAPI usersMicroserviceOpenAPI() {
-    //     return new OpenAPI()
-    //             .info(new Info().title("Your API Title")
-    //                     .description("Your API Description")
-    //                     .version("1.0"));
-    // }
+     @Bean
+     public OpenAPI usersMicroserviceOpenAPI() {
+         return new OpenAPI()
+                 .info(new Info().title("Your API Title")
+                         .description("Your API Description")
+                         .version("1.0"));
+     }
 }
