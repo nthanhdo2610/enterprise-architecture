@@ -1,4 +1,4 @@
-package cs544.user.api;
+package cs544.auth.user.api;
 
 import javax.validation.Valid;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cs544.jwt.JwtTokenUtil;
-import cs544.user.User;
+import cs544.auth.jwt.JwtTokenUtil;
+import cs544.auth.user.User;
 
 @RestController
 public class AuthApi {

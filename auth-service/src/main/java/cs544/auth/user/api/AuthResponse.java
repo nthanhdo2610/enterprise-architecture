@@ -1,4 +1,4 @@
-package cs544.user.api;
+package cs544.auth.user.api;
 
 import lombok.Getter;
 import lombok.Setter;

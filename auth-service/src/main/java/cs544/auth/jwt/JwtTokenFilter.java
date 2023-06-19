@@ -1,4 +1,4 @@
-package cs544.jwt;
+package cs544.auth.jwt;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
- import cs544.user.User;
+ import cs544.auth.user.User;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {

@@ -1,4 +1,4 @@
-package cs544.user;
+package cs544.auth.user;
 
 import java.util.Optional;
 

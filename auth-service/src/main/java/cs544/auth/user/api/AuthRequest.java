@@ -1,4 +1,4 @@
-package cs544.user.api;
+package cs544.auth.user.api;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

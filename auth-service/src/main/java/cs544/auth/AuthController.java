@@ -1,4 +1,4 @@
-package cs544;
+package cs544.auth;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

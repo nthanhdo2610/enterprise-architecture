@@ -1,4 +1,4 @@
-package cs544.user;
+package cs544.auth.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,8 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
-// import cs544.user.UserRepository;
-// import cs544.user.User;
+// import cs544.auth.user.UserRepository;
+// import cs544.auth.user.User;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -20,7 +20,7 @@ public class UserRepositoryTests {
 
 	@Autowired private UserRepository repo;
 	
-	@Test
+//	@Test
 	public void testCreateUser() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode("password");

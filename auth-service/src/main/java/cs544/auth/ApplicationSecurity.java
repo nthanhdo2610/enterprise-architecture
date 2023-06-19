@@ -1,6 +1,4 @@
-package cs544;
-
-import javax.servlet.http.HttpServletResponse;
+package cs544.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import cs544.jwt.JwtTokenFilter;
-import cs544.user.UserRepository;
+import cs544.auth.jwt.JwtTokenFilter;
+import cs544.auth.user.UserRepository;
 
 @EnableWebSecurity(debug = true)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
