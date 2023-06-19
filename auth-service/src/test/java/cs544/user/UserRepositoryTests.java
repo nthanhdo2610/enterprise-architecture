@@ -29,7 +29,7 @@ public class UserRepositoryTests {
 
 		//valid api test curl
 		//curl localhost:8080/auth/?token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2LG5hbUBjb2RlamF2YS5uZXQiLCJpc3MiOiJDb2RlSmF2YSIsImlhdCI6MTY4NzAzMDI2MywiZXhwIjoxNjg3MTE2NjYzfQ.bmH2h_3RVM15KdRMXWslRxLgWs7_MHFh82H1aRkM0VzHrBlAkyF3TXz36DI8yI_42S11S8HZoTd-xRnGKqhd8w | json
-		User newUser = new User("user@miu.edu", password, false);
+		User newUser = new User("user@miu.edu", password, "admin");
 		
 		User savedUser = repo.save(newUser);
 		
