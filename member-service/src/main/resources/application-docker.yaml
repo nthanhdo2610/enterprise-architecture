@@ -20,6 +20,6 @@ services:
     host: sport-service
     port: 8081
     context-path: /sport/
-logging:
- level:
-   root: DEBUG
+#logging:
+# level:
+#   root: DEBUG
