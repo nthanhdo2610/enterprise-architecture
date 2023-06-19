@@ -10,7 +10,7 @@ management:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:root@mongodb/cs544
+      uri: mongodb://mongodb/gameDb
 services:
   auth:
     host: auth-service

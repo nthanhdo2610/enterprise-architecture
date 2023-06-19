@@ -27,9 +27,9 @@ services:
     image: mongo:4.4
     restart: unless-stopped
     environment:
-      MONGO_INITDB_DATABASE: cs544
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: gameDb
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
     volumes:
