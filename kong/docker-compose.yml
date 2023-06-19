@@ -19,7 +19,9 @@ services:
       timeout: 30s
       retries: 3
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - kong-database
 
 #  kong-migration:
 #    container_name: kong-migration
@@ -64,7 +66,9 @@ services:
       - "8443:8443"
       - "127.0.0.1:8444:8444"
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - kong
 
 #  konga-prepare:
 #    container_name: kong-prepare
@@ -89,7 +93,9 @@ services:
     ports:
       - "1337:1337"
     networks:
-      - cs544
+      cs544:
+        aliases:
+          - konga
 
 volumes:
   kong_data: {}
