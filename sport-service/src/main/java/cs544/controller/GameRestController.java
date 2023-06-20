@@ -198,8 +198,8 @@ public class GameRestController {
     }
 
     @Tag(name = "delete", description = "delete just one Game by ID")
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable String id, @RequestParam String token) {
+    @DeleteMapping("/delete")
+    public String delete(@RequestParam String id, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
             if ("ROLE_ADMIN".equals(tokenServer.verifyTokenRole(token))) {
                 gameService.delete(id);
