@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document
 public class Game {
+    @Id
     private String gameId;
 	private String leagueName;
     private String teamNameHome;
