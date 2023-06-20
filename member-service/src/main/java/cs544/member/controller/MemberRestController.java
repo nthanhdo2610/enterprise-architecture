@@ -25,8 +25,8 @@ public class MemberRestController {
     }
 
 
-    @GetMapping("/testApi")
-    public String testApi() {
+    @GetMapping
+    public String getAll() {
         return "Success";
     }
 
