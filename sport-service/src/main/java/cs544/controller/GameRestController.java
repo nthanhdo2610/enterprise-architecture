@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import cs544.domain.Game;
 import cs544.service.GameService;
 import cs544.token.TokenServer;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class GameRestController {
         this.gameService = gameService;
         this.tokenServer = tokenServer;
     }
-
+    @Tag(name = "setScore", description = "It is setting the scores")
     @PostMapping("/setScore")
     public String setScore(@RequestBody Map<String, Integer> scores, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -45,6 +45,7 @@ public class GameRestController {
         }
     }
 
+    @Tag(name = "addGame", description = "It is adding new game to Mongodb")
     @PostMapping("/addGame")
     public Game addGame(@RequestBody Game game, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -57,7 +58,7 @@ public class GameRestController {
             return null;
         }
     }
-
+    @Tag(name = "setStart", description = "It is starting game also sending to RabbitMQ")
     @PostMapping("/setStart")
     public String setStart(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -76,7 +77,7 @@ public class GameRestController {
             return "YOU NEED TO TRANSFER TOKEN";
         }
     }
-
+    @Tag(name = "setStop", description = "It is stoping game also set the who is win")
     @PostMapping("/setStop")
     public String setStop(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -91,20 +92,7 @@ public class GameRestController {
             return "YOU NEED TO TRANSFER TOKEN";
         }
     }
-
-    @PostMapping("/setStopFromStream")
-    public String setStopFromStream(@RequestBody Game game, @RequestParam String token) {
-        if (tokenServer.verifyToken(token)) {
-            if (game != null) {
-                return gameService.setGameStatus(game, "stop");
-            } else {
-                return "STOP FAILED FROM STREAM";
-            }
-        } else {
-            return "YOU NEED TO TRANSFER TOKEN";
-        }
-    }
-
+    @Tag(name = "getAllGame", description = "coming the all games")
     @GetMapping("/getAllGame")
     public List<Game> getAll(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -113,7 +101,7 @@ public class GameRestController {
             return null;
         }
     }
-
+    @Tag(name = "getLiveGame", description = "getting just Live Game")
     @GetMapping("/getLiveGame")
     public Game getLiveGame(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -122,7 +110,7 @@ public class GameRestController {
             return null;
         }
     }
-
+    @Tag(name = "get", description = "get just one Game by ID")
     @GetMapping("/{id}")
     public Game get(@PathVariable String id, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -131,14 +119,14 @@ public class GameRestController {
             return null;
         }
     }
-
+    @Tag(name = "delete", description = "delete just one Game by ID")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id, @RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
             gameService.delete(id);
         }
     }
-
+    @Tag(name = "deleteAll", description = "deleteAll Game")
     @DeleteMapping("/deleteAll")
     public void deleteAll(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
@@ -147,7 +135,7 @@ public class GameRestController {
             }
         }
     }
-
+    @Tag(name = "deleteAllOthers", description = "deleteAll without live Game")
     @DeleteMapping("/deleteAllOthers")
     public void deleteAllOthers(@RequestParam String token) {
         if (tokenServer.verifyToken(token)) {
