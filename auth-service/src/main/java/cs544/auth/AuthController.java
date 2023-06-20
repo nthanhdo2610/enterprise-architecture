@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @GetMapping
+    @GetMapping("test")
     public String getAll() {
         return "AuthController";
     }

@@ -9,8 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @NoArgsConstructor
+@Document
 public class Game {
-	private String gameId;
+    private String gameId;
 	private String leagueName;
     private String teamNameHome;
     private String teamNameVisitor;
@@ -19,5 +20,4 @@ public class Game {
     private int goalVisit;
     private String wonTeam;
     private Integer durationMinutes;
-
 }
