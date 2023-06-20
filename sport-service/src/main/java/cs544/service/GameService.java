@@ -109,7 +109,7 @@ public class GameService {
             }
         };
         // Schedule the timer task to run every 1 minute (60000 milliseconds)
-        timer.scheduleAtFixedRate(timerTask, 0, 1800);
+        timer.scheduleAtFixedRate(timerTask, 0, 3000);
     }
 
     public void decreaseMinutes() {
